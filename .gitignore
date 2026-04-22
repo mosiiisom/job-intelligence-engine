@@ -1,0 +1,95 @@
+# =========================
+# 🐍 Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pkl
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# =========================
+# 🧪 Testing / Temp files
+# =========================
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Temporary scripts / junk code
+temp.py
+test.py
+debug.py
+scratch.py
+*_test.py
+
+# =========================
+# 🧠 IDE - PyCharm
+# =========================
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# =========================
+# 🪟 OS (Windows)
+# =========================
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# =========================
+# 📦 Project data (IMPORTANT)
+# =========================
+data/
+*.csv
+*.json
+
+# (اگر خواستی فقط CSVهای output ignore بشن، اینو تغییر بده)
+
+# =========================
+# 🌐 Environment variables
+# =========================
+.env
+.env.local
+.env.*.local
+
+# =========================
+# 🧹 Logs
+# =========================
+*.log
+logs/
+
+# =========================
+# 🧪 Playwright / browser cache
+# =========================
+playwright/.cache/
+browser-data/
+user-data/
+
+# =========================
+# 🧠 Streamlit
+# =========================
+.streamlit/
+
+# =========================
+# 📦 Distribution / build
+# =========================
+dist/
+build/
+*.egg-info/
+
+# =========================
+# 🧊 Misc
+# =========================
+.DS_Store
+
+# Jupyter notebooks (if not needed)
+.ipynb_checkpoints/
+*.ipynb
