@@ -1,5 +1,15 @@
 HEADLESS = True
 
+SOURCES = {
+    "Remoteok": {
+        "enabled": True,
+        "base_url": "https://remoteok.com/"
+    },
+    "Weworkremotely": {
+        "enabled": True,
+        "base_url": "https://weworkremotely.com/"
+    }
+}
 PROXIES = [
     # "http://user:pass@ip:port
     "http://127.0.0.1:10808"

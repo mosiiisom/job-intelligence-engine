@@ -1,14 +1,14 @@
-from datetime import datetime
 from typing import List
 from models.job import Job
 from scraper.playwright_scraper import PlaywrightEngine
 from scraper.sources.base import BaseJobSource
 
+
 class RemoteOkSource(BaseJobSource):
-    def __init__(self,engine: PlaywrightEngine = None):
+    def __init__(self, engine: PlaywrightEngine = None, base_url: str = None, name: str = None):
         self.engine = engine if engine else PlaywrightEngine()
-        self.url = "https://remoteok.com"
-        self.name = "RemoteOk"
+        self.url = base_url if base_url else "https://remoteok.com"
+        self.name = name if name else "RemoteOk"
 
     def fetch(self) -> List[Job]:
         page = self.engine.get_page(self.url)
@@ -24,7 +24,6 @@ class RemoteOkSource(BaseJobSource):
                     jobs.append(job)
             except Exception as e:
                 print(f"parse error (e)")
-
 
         return jobs
 
@@ -69,7 +68,3 @@ class RemoteOkSource(BaseJobSource):
             employment_type="part-time" if part_time else "full-time",
             tags=tags
         )
-
-
-
-
