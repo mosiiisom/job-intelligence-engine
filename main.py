@@ -1,5 +1,5 @@
 from scraper.playwright_scraper import PlaywrightEngine
-from scraper.sources.remteok import RemoteOkSource
+from scraper.sources.remoteok import RemoteOkSource
 from config.settings import *
 from storage.csv_handler import save_jobs
 
