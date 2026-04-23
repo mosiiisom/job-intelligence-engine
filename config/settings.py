@@ -6,7 +6,7 @@ SOURCES = {
         "base_url": "https://remoteok.com/"
     },
     "Weworkremotely": {
-        "enabled": True,
+        "enabled": False,
         "base_url": "https://weworkremotely.com/"
     }
 }
