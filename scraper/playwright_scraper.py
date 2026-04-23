@@ -1,6 +1,8 @@
 import random
 import time
-from playwright.sync_api import sync_playwright, Page
+from typing import Optional, Tuple
+
+from playwright.sync_api import sync_playwright, Page, BrowserContext
 
 
 class PlaywrightEngine:
@@ -46,7 +48,7 @@ class PlaywrightEngine:
 
         return None
 
-    def get_page(self, url: str, retries=3, delay=2) -> Page | None:
+    def get_page(self, url: str, retries=3, delay=2) -> Optional[Tuple[Page,BrowserContext]]:
         for attempt in range(retries):
             try:
                 context = self.browser.new_context(
@@ -57,7 +59,7 @@ class PlaywrightEngine:
                 page.goto(url)
                 page.wait_for_load_state("networkidle")
 
-                return page
+                return page, context
             except Exception as e:
                 print(f"[ Retry {attempt + 1}] Error {e}")
                 time.sleep(delay)

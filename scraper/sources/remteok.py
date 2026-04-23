@@ -1,3 +1,4 @@
+from lib2to3.fixes.fix_input import context
 from typing import List
 from models.job import Job
 from scraper.playwright_scraper import PlaywrightEngine
@@ -11,21 +12,31 @@ class RemoteOkSource(BaseJobSource):
         self.name = name if name else "RemoteOk"
 
     def fetch(self) -> List[Job]:
-        page = self.engine.get_page(self.url)
+        fetch_results = self.engine.get_page(self.url)
 
-        jobs_element = page.query_selector_all("tr.job")
+        if not fetch_results:
+            return []
 
-        jobs = []
+        page, context = fetch_results
 
-        for job_el in jobs_element:
-            try:
-                job = self._parse_job(job_el)
-                if job is not None:
-                    jobs.append(job)
-            except Exception as e:
-                print(f"parse error (e)")
+        try:
+            jobs_element = page.query_selector_all("tr.job")
 
-        return jobs
+            jobs = []
+
+            for job_el in jobs_element:
+                try:
+                    job = self._parse_job(job_el)
+                    if job is not None:
+                        jobs.append(job)
+                except Exception as e:
+                    print(f"parse error (e)")
+
+            return jobs
+        finally:
+            # close page and context to avoid context memory leak and free memory space
+            page.close()
+            context.close()
 
     def _parse_job(self, job_el):
         title_el = job_el.query_selector("h2")
