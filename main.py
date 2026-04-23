@@ -14,15 +14,15 @@ def main():
     # start the engine
     engine.start()
 
-    # get enable sources from config
-    enable_sources = [{
-        source_name: source_data
-    } for source_name, source_data in SOURCES.items() if source_data.get('enabled')]
+    # filter enable sources from config
+    enable_sources = [
+        (name, data) for name, data in SOURCES.items() if data.get('enabled')
+    ]
 
     jobs = []
 
-    for enable_s in enable_sources:
-        source = RemoteOkSource(engine=engine,base_url=enable_s['base_url'],name=enable_s['name'])
+    for s_title,s_data in enable_sources:
+        source = RemoteOkSource(engine=engine,base_url=s_data['base_url'],name=s_title)
         fetched_jobs = source.fetch()
         if fetched_jobs:
             jobs.extend(fetched_jobs)
@@ -31,6 +31,9 @@ def main():
     print(jobs[0])
 
     engine.stop()
+
+    # save in csv / json
+    
 
 
 if __name__ == '__main__':
