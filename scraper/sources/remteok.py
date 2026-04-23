@@ -41,7 +41,7 @@ class RemoteOkSource(BaseJobSource):
     def _parse_job(self, job_el):
         title_el = job_el.query_selector("h2")
         company_el = job_el.query_selector("h3")
-        location_el = job_el.query_selector(".location")
+        location_el = job_el.query_selector_all(".location")[0]
         link_el = job_el.query_selector("a.preventLink")
         time_el = job_el.query_selector("time")
         employment_els = job_el.query_selector_all(".location")
@@ -52,7 +52,7 @@ class RemoteOkSource(BaseJobSource):
 
         title = title_el.inner_text().strip()
         company = company_el.inner_text().strip()
-        location = location_el.inner_text().strip() if location_el else "Remote"
+        location = location_el.inner_text().strip() if location_el else "unknown"
         posted_date = time_el.get_attribute("datetime").strip()
 
         relative_link = link_el.get_attribute("href") if link_el else None
@@ -67,6 +67,19 @@ class RemoteOkSource(BaseJobSource):
         tags = []
         for tag_el in tags_els:
             tags.append(tag_el.query_selector("h3").inner_text().strip())
+
+        location_content = location.lower()
+        if 'probably worldwide' in location_content:
+            location = 'probably worldwide'
+        elif 'worldwide' in location_content:
+            location = 'worldwide'
+        elif 'upgrade' in location_content:
+            location = 'unknown'
+        else:
+            location = location
+
+        # if 'remote' in location_content:
+        #     work_type = 'remote'
 
         return Job(
             title=title,
