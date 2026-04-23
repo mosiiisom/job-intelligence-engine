@@ -45,7 +45,7 @@ class RemoteOkSource(BaseJobSource):
         link_el = job_el.query_selector("a.preventLink")
         time_el = job_el.query_selector("time")
         employment_els = job_el.query_selector_all(".location")
-        tags_els = job_el.query_selector_all(".tags")
+        tags_els = job_el.query_selector_all(".tag")
 
         if not title_el or not company_el:
             return None
