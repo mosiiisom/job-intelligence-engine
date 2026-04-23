@@ -1,6 +1,7 @@
 from scraper.playwright_scraper import PlaywrightEngine
 from scraper.sources.remteok import RemoteOkSource
 from config.settings import *
+from storage.csv_handler import save_jobs
 
 
 def main():
@@ -22,18 +23,26 @@ def main():
     jobs = []
 
     for s_title,s_data in enable_sources:
-        source = RemoteOkSource(engine=engine,base_url=s_data['base_url'],name=s_title)
-        fetched_jobs = source.fetch()
-        if fetched_jobs:
-            jobs.extend(fetched_jobs)
+        fetched_jobs = []
+        source = None
+        if s_title.lower() == 'remoteok':
+            source = RemoteOkSource(engine=engine,base_url=s_data['base_url'],name=s_title)
 
+        if source:
+            fetched_jobs = source.fetch()
 
-    print(jobs[0])
+            if fetched_jobs:
+                jobs.extend(fetched_jobs)
 
     engine.stop()
 
+    # simple deduplication
+    unique_jobs = {job.url: job for job in jobs}.values()
+    unique_jobs = list(unique_jobs)
+
     # save in csv / json
-    
+    save_jobs(unique_jobs)
+
 
 
 if __name__ == '__main__':
