@@ -69,6 +69,39 @@ Streamlit Dashboard (UI + Filters)
 
 ---
 
+## ⚙️ Installation
+
+### 1️⃣ Clone repository
+```bash
+git clone https://github.com/mosiiisom/job-intelligence-engine
+cd job-intelligence-engine
+```
+### 2️⃣ Setup environment (optional but recommended)
+```bash
+python -m venv venv
+# activate venv (Windows)
+venv\Scripts\activate
+```
+### 3️⃣ Install dependencies
+```bash
+pip install -r requirements.txt
+```
+### 4️⃣ Install Playwright browser
+```bash
+playwright install
+```
+### 🚀 Run Project
+🔹 Run scraper (data pipeline)
+```bash
+python main.py
+```
+🔹 Run dashboard (UI)
+```bash
+streamlit run dashboard/app.py
+```
+
+---
+
 ## 🧰 Tech Stack
 
 - Python
