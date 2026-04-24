@@ -10,42 +10,12 @@ import pandas as pd
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_PATH = os.path.join(ROOT_DIR, "data", "jobs.csv")
 
-# --- Constants ---
-REFRESH_COOLDOWN = 600      # 10 minutes
-AUTO_REFRESH_INTERVAL = 1800  # 30 minutes
 
-
-@st.cache_data
+@st.cache_data(ttl=600)
 def load_data():
     if not os.path.exists(DATA_PATH):
         return pd.DataFrame()
     return pd.read_csv(DATA_PATH)
-
-
-def run_scraper():
-    """
-    Run main.py safely
-    """
-    script_path = os.path.join(ROOT_DIR, "main.py")
-
-    subprocess.run(
-        ["python", script_path],
-        check=False
-    )
-
-
-def can_refresh():
-    last_run = st.session_state.get("last_run", 0)
-    return time.time() - last_run > REFRESH_COOLDOWN
-
-
-def should_auto_refresh():
-    last_run = st.session_state.get("last_run", 0)
-    return time.time() - last_run > AUTO_REFRESH_INTERVAL
-
-
-def update_last_run():
-    st.session_state["last_run"] = time.time()
 
 def main():
     st.set_page_config(
@@ -56,44 +26,22 @@ def main():
     st.title("🚀 Job Intelligence Dashboard")
 
     st.markdown("""
-    <div style="
-        padding:10px;
-        border-radius:10px;
-        background:#1e1e1e;
-        border:1px solid #333;
-        margin-bottom:15px;
-    ">
-    🚧 <b>Early Stage Project</b><br>
-    Currently scraping limited sources. More sources & AI features coming soon.
-    </div>
-    """, unsafe_allow_html=True)
-
-    # --- Auto Refresh (30 min) ---
-    if "last_run" not in st.session_state:
-        st.session_state["last_run"] = 0
-
-    if should_auto_refresh():
-        with st.spinner("Auto updating jobs..."):
-            run_scraper()
-            update_last_run()
-            st.cache_data.clear()
+        <div style="
+            padding:12px;
+            border-radius:10px;
+            background:#1e1e1e;
+            border:1px solid #333;
+            margin-bottom:15px;
+            color:#ddd;
+        ">
+        🚧 <b>Early Stage Project</b><br>
+        Jobs are collected automatically every 1 hour via GitHub Actions.<br>
+        This dashboard only visualizes pre-collected data.
+        </div>
+        """, unsafe_allow_html=True)
 
     # --- Sidebar ---
     st.sidebar.header("Controls")
-
-    if st.sidebar.button("🔄 Refresh Jobs"):
-        if can_refresh():
-            with st.spinner("Updating jobs..."):
-                run_scraper()
-                update_last_run()
-                st.cache_data.clear()
-                st.success("Jobs updated!")
-                st.rerun()
-        else:
-            remaining = int(
-                REFRESH_COOLDOWN - (time.time() - st.session_state["last_run"])
-            )
-            st.warning(f"Wait {remaining}s before refreshing again")
 
     # --- Load Data ---
     df = load_data()
