@@ -1,6 +1,7 @@
 import csv
 from typing import List
 from models.job import Job
+from pathlib import Path
 
 
 def save_jobs(
@@ -11,6 +12,9 @@ def save_jobs(
     if not jobs:
         print("No jobs to save")
         return
+
+    # make sure the file path exist
+    Path(file_path).parent.mkdir(parents=True, exist_ok=True)
 
     fieldsName = list(jobs[0].to_dict().keys())
 
