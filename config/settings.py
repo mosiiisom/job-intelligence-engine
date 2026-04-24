@@ -1,3 +1,8 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 HEADLESS = True
 
 SOURCES = {
@@ -10,10 +15,9 @@ SOURCES = {
         "base_url": "https://weworkremotely.com/"
     }
 }
-PROXIES = [
-    # "http://user:pass@ip:port
-    "http://127.0.0.1:10808"
-]
+
+# "http://user:pass@ip:port
+PROXIES = str(os.getenv("PROXIES")).split(",") if os.getenv("PROXIES") else []
 
 USER_AGENTS = [
     # "Mozilla/5.0 (Windows NT 10.0; Win64; x64)...",
