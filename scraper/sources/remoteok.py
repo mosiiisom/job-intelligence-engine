@@ -53,7 +53,7 @@ class RemoteOkSource(BaseJobSource):
         title = title_el.inner_text().strip()
         company = company_el.inner_text().strip()
         location = location_el.inner_text().strip() if location_el else "unknown"
-        posted_date = time_el.get_attribute("datetime").strip()
+        posted_at = time_el.get_attribute("datetime").strip()
 
         relative_link = link_el.get_attribute("href") if link_el else None
         url = f"https://remoteok.com{relative_link}" if relative_link else None
@@ -87,7 +87,7 @@ class RemoteOkSource(BaseJobSource):
             location=location,
             url=url,
             source=self.name,
-            posted_date=posted_date,
+            posted_at=posted_at,
             work_type="remote",
             employment_type="part-time" if part_time else "full-time",
             tags=tags

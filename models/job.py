@@ -9,7 +9,7 @@ class Job:
     location: str
     url: str
     source: str
-    posted_date: Optional[str] = None
+    posted_at: Optional[str] = None
     work_type: str = "remote"
     employment_type: str = "full-time"
     tags: List[str] = field(default_factory=list)
@@ -21,7 +21,7 @@ class Job:
             "location": self.location,
             "url": self.url,
             "source": self.source,
-            "posted_date": self.posted_date,
+            "posted_at": self.posted_at,
             "work_type": self.work_type,
             "employment_type": self.employment_type,
             "tags": ",".join(self.tags)
