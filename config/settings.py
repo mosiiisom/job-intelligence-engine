@@ -39,3 +39,5 @@ SCRAPER_CONFIG = {
     "retries": 3,
     "delay": 2
 }
+
+DB_PATH = os.getenv("DB_PATH") if os.getenv("DB_PATH") is not None else "data/jobs.db"
