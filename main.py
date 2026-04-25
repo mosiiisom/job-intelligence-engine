@@ -2,6 +2,8 @@ from scraper.playwright_scraper import PlaywrightEngine
 from scraper.sources.remoteok import RemoteOkSource
 from config.settings import *
 from storage.csv_handler import save_jobs
+from storage.database import init_db
+from storage.repositories.job_repo import bulk_upsert_jobs
 
 
 def main():
@@ -36,12 +38,13 @@ def main():
 
     engine.stop()
 
-    # simple deduplication
-    unique_jobs = {job.url: job for job in jobs}.values()
-    unique_jobs = list(unique_jobs)
+    ## save in database
 
-    # save in csv / json
-    save_jobs(unique_jobs)
+    # make sure db file exist
+    init_db()
+
+    # upset the jobs
+    bulk_upsert_jobs(jobs)
 
 
 
