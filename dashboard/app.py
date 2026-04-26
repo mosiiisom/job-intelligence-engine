@@ -15,7 +15,12 @@ from storage.repositories.job_queries import filter_jobs
 @st.cache_data(ttl=300)
 def load_data():
     from storage.repositories.job_queries import get_all_jobs
-    return get_all_jobs(200)
+    all_jobs = get_all_jobs()
+
+    if all_jobs:
+        return all_jobs
+
+    return []
 
 def main():
     st.set_page_config(
