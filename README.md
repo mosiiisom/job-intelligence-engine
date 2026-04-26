@@ -1,105 +1,55 @@
-<p style="font-size: 64px;margin-top:20px;line-height: 1" align="center">🚀</p>
-<h1 style="margin:0" align="center">Job Intelligence Engine</h1>
+# 🚀 Job Intelligence Engine
 
-### 🧩 Automated Job Intelligence System (Scraping • CI/CD • Data Pipeline • Dashboard)
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python" />
-  <img src="https://img.shields.io/badge/Playwright-Scraping-green?logo=microsoftedge" />
-  <img src="https://img.shields.io/badge/Streamlit-Dashboard-red?logo=streamlit" />
-  <img src="https://img.shields.io/badge/GitHub-Actions-Automation-black?logo=githubactions" />
-</p>
+A lightweight job intelligence system that automatically collects, stores, and analyzes remote job postings using an automated data pipeline, structured database, and interactive dashboard.
 
 ---
 
-## 🌍 Live Demo
-👉 https://job-intelligence.streamlit.app/
+## 🧠 Overview
+
+This project started as a simple idea to avoid manually searching for remote jobs every day.
+
+It gradually evolved into a small data pipeline system that:
+
+- collects job postings automatically
+- stores structured data in a database
+- provides a query & filtering layer
+- visualizes everything in a dashboard
 
 ---
 
-## 🧠 About This Project
+## 🏗 Architecture
 
-This is not just a scraper.
-
-It is a fully automated **job intelligence system** that:
-
-- Scrapes remote job listings
-- Processes and structures data
-- Stores results in a lightweight dataset
-- Visualizes insights in a Streamlit dashboard
-- Runs automatically via GitHub Actions
-
-👉 Designed as a **portfolio-ready engineering system for remote jobs & migration opportunities**
+GitHub Actions (scheduled every hour)
+↓
+Playwright Scraper
+↓
+SQLite Database
+↓
+Query & Filter Layer
+↓
+Streamlit Dashboard
 
 ---
 
-## 🏗️ Architecture
+## ⚙️ Features
 
-GitHub Actions (scheduled every 1 hour)  
-↓  
-Playwright Scraper (RemoteOK)  
-↓  
-Data Processing Layer (Python)  
-↓  
-CSV Dataset (GitHub versioned storage)  
-↓  
-Streamlit Dashboard (UI + Filters)
-
----
-
-## ✨ Features
-
-- Automated job scraping pipeline
-- Scheduled execution via GitHub Actions
-- Lightweight CSV-based storage (no database needed)
-- Interactive Streamlit dashboard
-- Filters: company, location, tags, employment type
-- Card-based modern UI
-- Fully free deployment (zero infrastructure cost)
+- 🔄 Automated scraping via GitHub Actions (hourly runs)
+- 🗄 SQLite-based structured storage (migrated from CSV)
+- 🔍 Keyword search across job listings
+- 🧠 Flexible query and filtering system
+- 🏷 Tag-based filtering support
+- 📊 Interactive Streamlit dashboard
+- 🎨 Card-based UI with responsive layout
+- 🧩 Modular architecture (scraper / storage / UI separation)
 
 ---
+## 📊 What It Does
 
-## ⚙️ How It Works
-
-1. GitHub Actions triggers scraper every hour
-2. Playwright collects job listings from RemoteOK
-3. Data is cleaned and normalized
-4. Results are stored in `jobs.csv`
-5. Streamlit reads dataset and renders dashboard
-
----
-
-## ⚙️ Installation
-
-### 1️⃣ Clone repository
-```bash
-git clone https://github.com/mosiiisom/job-intelligence-engine
-cd job-intelligence-engine
-```
-### 2️⃣ Setup environment (optional but recommended)
-```bash
-python -m venv venv
-# activate venv (Windows)
-venv\Scripts\activate
-```
-### 3️⃣ Install dependencies
-```bash
-pip install -r requirements.txt
-```
-### 4️⃣ Install Playwright browser
-```bash
-playwright install
-```
-### 🚀 Run Project
-🔹 Run scraper (data pipeline)
-```bash
-python main.py
-```
-🔹 Run dashboard (UI)
-```bash
-streamlit run dashboard/app.py
-```
-
+1. GitHub Actions triggers the scraper automatically
+2. Playwright collects job postings from remote job boards
+3. Data is stored in a structured SQLite database
+4. Query layer handles filtering and search operations
+5. Streamlit dashboard visualizes results in real time UI
 ---
 
 ## 🧰 Tech Stack
@@ -107,49 +57,60 @@ streamlit run dashboard/app.py
 - Python
 - Playwright
 - Streamlit
+- SQLite
 - Pandas
 - GitHub Actions
 
 ---
 
-## 🧠 Engineering Decisions
+## 🚀 Installation
+```bash
+git clone https://github.com/mosiiisom/job-intelligence-engine
+cd job-intelligence-engine
 
-- CSV instead of database → simplicity + zero cost
-- GitHub Actions → built-in scheduler (no server required)
-- Streamlit → fast UI + easy deployment
-- Playwright → handles dynamic websites reliably
+pip install -r requirements.txt
+playwright install chromium
+```
+---
+
+## ▶️ Run
+```bash
+python main.py
+streamlit run dashboard/app.py
+```
 
 ---
 
-## 📌 Why this project matters
+## 📡 Updates
 
-This project demonstrates:
+Job data is automatically updated every 1 hour using GitHub Actions.
 
-- Real-world automation pipeline design
-- CI/CD workflow implementation
-- Data engineering fundamentals
-- Full-stack thinking (backend + UI + automation)
-
-👉 A production-like automation system with CI/CD, scraping pipeline, and dashboard visualization
+No manual execution required for data collection.
 
 ---
 
-## 🚀 Roadmap
+## 🧠 Roadmap
 
-- AI job scoring system
-- CV ↔ Job matching engine
-- Telegram alerts for new jobs
-- Multi-source scraping (LinkedIn, Indeed, etc.)
-- Migration to PostgreSQL for scaling
-
----
-
-## 📸 Preview
-
-`I'll record that soon as possible :D`
+- AI job ranking system
+- CV matching engine
+- semantic search
+- multi-source scraping
+- notifications system
 
 ---
 
-## 📬 Contact
+## 🤝 Contributing
 
-GitHub: https://github.com/mosiiisom
+This is an early-stage system project.
+Contributions, ideas, and improvements are welcome.
+
+---
+## 📄 License
+
+MIT License
+
+---
+
+## 🔗 Live Demo
+
+https://job-intelligence.streamlit.app/
