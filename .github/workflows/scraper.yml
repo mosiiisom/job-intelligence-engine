@@ -34,6 +34,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add -f data/jobs.csv
+          git add -f data/jobs.db
           git commit -m "update jobs data" || echo "No changes"
           git push
