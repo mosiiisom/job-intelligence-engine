@@ -1,21 +1,23 @@
-import time
 import os
-import subprocess
+import sys
 
 import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
 
+from storage.repositories.job_queries import filter_jobs, search_jobs
+
 # --- Paths ---
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-DATA_PATH = os.path.join(ROOT_DIR, "data", "jobs.csv")
+
+if ROOT_DIR not in sys.path:
+    sys.path.append(ROOT_DIR)
 
 
-@st.cache_data(ttl=600)
+@st.cache_data(ttl=300)
 def load_data():
-    if not os.path.exists(DATA_PATH):
-        return pd.DataFrame()
-    return pd.read_csv(DATA_PATH)
+    from storage.repositories.job_queries import get_all_jobs
+    return get_all_jobs(200)
 
 def main():
     st.set_page_config(
@@ -44,14 +46,18 @@ def main():
     st.sidebar.header("Controls")
 
     # --- Load Data ---
-    df = load_data()
+    jobs = load_data()
 
-    if df.empty:
+    if not jobs:
         st.warning("No data found. Run scraper first.")
         return
 
+    df = pd.DataFrame(jobs)
+
     # --- Filters ---
     st.sidebar.header("Filters")
+
+    keyword = st.sidebar.text_input("Search")
 
     companies = st.sidebar.multiselect(
         "Company",
@@ -79,40 +85,46 @@ def main():
     )
 
     # --- Apply Filters ---
-    filtered_df = df.copy()
+    filtered_jobs = filter_jobs(
+        companies=companies,
+        locations=locations,
+        employment_types=employment_types,
+        tags=selected_tags,
+        limit=200
+    )
 
-    if companies:
-        filtered_df = filtered_df[filtered_df["company"].isin(companies)]
 
-    if locations:
-        filtered_df = filtered_df[filtered_df["location"].isin(locations)]
-
-    if employment_types:
-        filtered_df = filtered_df[
-            filtered_df["employment_type"].isin(employment_types)
+    if keyword:
+        filtered_jobs = [
+            job for job in filtered_jobs
+            if keyword.lower() in (
+                    job["title"] + job["company"] + job["tags"]
+            ).lower()
         ]
 
-    if selected_tags:
-        filtered_df = filtered_df[
-            filtered_df["tags"].apply(
-                lambda x: any(
-                    tag in [t.strip() for t in str(x).split(",")]
-                    for tag in selected_tags
-                )
-            )
-        ]
+    filtered_df = pd.DataFrame(filtered_jobs)
 
     # --- Metrics ---
     col1, col2, col3 = st.columns(3)
 
-    col1.metric("Total Jobs", len(df))
+    if filtered_df.empty:
+        companies_count = 0
+    else:
+        companies_count = filtered_df["company"].nunique()
+
+    all_jobs = load_data()
+    col1.metric("Total Jobs", len(all_jobs))
     col2.metric("Filtered Jobs", len(filtered_df))
-    col3.metric("Companies", filtered_df["company"].nunique())
+    col3.metric("Companies", companies_count)
 
     st.subheader("💼 Jobs")
 
     MAX_JOBS = 50
     display_df = filtered_df.head(MAX_JOBS)
+
+    if filtered_df.empty:
+        st.warning("No jobs match your filters 😅 Try removing some filters")
+        return
 
     for _, row in display_df.iterrows():
 
