@@ -1,11 +1,8 @@
 import os
 import sys
-
 import streamlit as st
 import streamlit.components.v1 as components
 import pandas as pd
-
-from storage.repositories.job_queries import filter_jobs, search_jobs
 
 # --- Paths ---
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -13,6 +10,7 @@ ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if ROOT_DIR not in sys.path:
     sys.path.append(ROOT_DIR)
 
+from storage.repositories.job_queries import filter_jobs
 
 @st.cache_data(ttl=300)
 def load_data():
