@@ -47,11 +47,9 @@ $RECYCLE.BIN/
 # =========================
 # 📦 Project data (IMPORTANT)
 # =========================
-data/
-*.csv
-*.json
-
-# (اگر خواستی فقط CSVهای output ignore بشن، اینو تغییر بده)
+data/*.db
+data/*.json
+data/*.csv
 
 # =========================
 # 🌐 Environment variables
