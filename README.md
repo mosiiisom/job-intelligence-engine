@@ -1,12 +1,14 @@
 # 🚀 Job Intelligence Engine
 
-A lightweight job intelligence system that automatically collects, stores, and analyzes remote job postings using an automated data pipeline, structured database, and interactive dashboard.
+**Automated Remote Job Intelligence System**
+
+A lightweight yet powerful pipeline that automatically scrapes remote job opportunities every hour, stores them in a structured SQLite database, and visualizes everything through an interactive Streamlit dashboard.
 
 ---
 
-## 🧠 Overview
+### 🧠 Overview
 
-This project started as a simple idea to avoid manually searching for remote jobs every day.
+This project was built to eliminate the daily manual search for remote jobs. It evolved into a complete end-to-end intelligence system with automated scraping, persistent storage, advanced filtering, and a clean, responsive dashboard.
 
 It gradually evolved into a small data pipeline system that:
 
@@ -17,33 +19,27 @@ It gradually evolved into a small data pipeline system that:
 
 ---
 
-## 🏗 Architecture
+### 🏗 Architecture
 
-GitHub Actions (scheduled every hour)
-↓
-Playwright Scraper
-↓
-SQLite Database
-↓
-Query & Filter Layer
-↓
-Streamlit Dashboard
-
+[![](https://mermaid.ink/img/pako:eNpFUc1OwkAQfpXNHIwmhVTaBboHE6QqJphI0Isth6U7tBvbLpluxQq8u6VEnNPM9zfJzB4SoxAEbHKzSzJJlr2FccnamkRP2s7qNZskVpuyWrFe7-4wMzXlDVsmGao6RzrcX7_mstmRTjPbwiS3SDfnhFY_jZaLubbIQmnlWla4ulBhtKiRGnbFHnVukdhcNkj__EO0tISyyLVt3VW2NpIUm-svZO_PnQwcSEkrEJZqdKBAKuRphP2JjcFmWGAMom2VpM8Y4vLYeray_DCm-LORqdMMxEbmVTvVWyUthlqmJIsLSlgqpKmpSwvC58MuBMQevkF4nPeH7vh2MOBBwLnrO9CA4EHf90Y-Hwe-7wWe6x8d-Om2uv3xiDuASltDL-frd084_gKiHn1N?type=png)](https://mermaid.live/edit#pako:eNpFUc1OwkAQfpXNHIwmhVTaBboHE6QqJphI0Isth6U7tBvbLpluxQq8u6VEnNPM9zfJzB4SoxAEbHKzSzJJlr2FccnamkRP2s7qNZskVpuyWrFe7-4wMzXlDVsmGao6RzrcX7_mstmRTjPbwiS3SDfnhFY_jZaLubbIQmnlWla4ulBhtKiRGnbFHnVukdhcNkj__EO0tISyyLVt3VW2NpIUm-svZO_PnQwcSEkrEJZqdKBAKuRphP2JjcFmWGAMom2VpM8Y4vLYeray_DCm-LORqdMMxEbmVTvVWyUthlqmJIsLSlgqpKmpSwvC58MuBMQevkF4nPeH7vh2MOBBwLnrO9CA4EHf90Y-Hwe-7wWe6x8d-Om2uv3xiDuASltDL-frd084_gKiHn1N)
+**High-level Flow:**
+GitHub Actions (hourly) → Playwright Scraper → SQLite Database → Query & Filter Layer → Streamlit Dashboard
 ---
 
-## ⚙️ Features
+### ⚙️ Features
 
-- 🔄 Automated scraping via GitHub Actions (hourly runs)
-- 🗄 SQLite-based structured storage (migrated from CSV)
-- 🔍 Keyword search across job listings
+- 🔄 Hourly automated scraping powered by GitHub Actions + Playwright
+- 🗄 Structured data storage in SQLite (migrated from CSV for better scalability)
+- 🔍 Advanced keyword search and flexible query system
 - 🧠 Flexible query and filtering system
-- 🏷 Tag-based filtering support
-- 📊 Interactive Streamlit dashboard
-- 🎨 Card-based UI with responsive layout
-- 🧩 Modular architecture (scraper / storage / UI separation)
+- 🏷 Tag-based and multi-criteria filtering
+- 📊 Clean, responsive card-based UI in Streamlit
+- 🎨 Persistent data handling with context managers
+- 🧩 Fully modular architecture (`scraper` / `storage` / `dashboard` / `models`)
+- 🧰 CI/CD pipeline that commits updated database automatically
 
 ---
-## 📊 What It Does
+### 📊 What It Does
 
 1. GitHub Actions triggers the scraper automatically
 2. Playwright collects job postings from remote job boards
@@ -52,18 +48,25 @@ Streamlit Dashboard
 5. Streamlit dashboard visualizes results in real time UI
 ---
 
-## 🧰 Tech Stack
+### 🧰 Tech Stack
 
-- Python
-- Playwright
-- Streamlit
-- SQLite
-- Pandas
-- GitHub Actions
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-2EAD33?logo=playwright&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?logo=github-actions&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white)
+
+- **Core**: Python 3.11
+- **Scraping**: Playwright
+- **Dashboard**: Streamlit
+- **Database**: SQLite
+- **Orchestration**: GitHub Actions
+- **Data Processing**: Pandas
 
 ---
 
-## 🚀 Installation
+### 🚀 Installation
 ```bash
 git clone https://github.com/mosiiisom/job-intelligence-engine
 cd job-intelligence-engine
@@ -73,44 +76,47 @@ playwright install chromium
 ```
 ---
 
-## ▶️ Run
+### ▶️ Run
 ```bash
 python main.py
 streamlit run dashboard/app.py
 ```
 
----
+### 🐋 Docker Support (Tested & Ready)
+The project is fully containerized with Docker & Docker Compose (scraper as one-off service + persistent dashboard).
 
-## 📡 Updates
-
-Job data is automatically updated every 1 hour using GitHub Actions.
-
-No manual execution required for data collection.
-
----
-
-## 🧠 Roadmap
-
-- AI job ranking system
-- CV matching engine
-- semantic search
-- multi-source scraping
-- notifications system
+```
+# Rebuild and test
+docker compose build --no-cache
+// you can cron this in custom schedule period for scrape new data
+docker compose run --rm scraper 
+docker compose up -d dashboard
+```
+(Dockerfile and docker-compose.yml will be added/updated soon — currently tested locally and in online playgrounds)
 
 ---
 
-## 🤝 Contributing
+### 🧠 Roadmap
+
+- AI-powered job ranking and relevance scoring
+- Resume-to-job matching engine
+- Semantic search using embeddings
+- Multi-source scraping (more job boards)
+- Notification system (Telegram / Email)
+- Advanced analytics dashboard
+
+---
+
+### 🤝 Contributing
 
 This is an early-stage system project.
 Contributions, ideas, and improvements are welcome.
 
 ---
-## 📄 License
+### 📄 License
 
 MIT License
 
 ---
 
-## 🔗 Live Demo
-
-https://job-intelligence.streamlit.app/
+Built with ❤️ for remote job seekers
