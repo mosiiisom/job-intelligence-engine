@@ -21,9 +21,17 @@ It gradually evolved into a small data pipeline system that:
 
 ### 🏗 Architecture
 
-[![](https://mermaid.ink/img/pako:eNpFUc1OwkAQfpXNHIwmhVTaBboHE6QqJphI0Isth6U7tBvbLpluxQq8u6VEnNPM9zfJzB4SoxAEbHKzSzJJlr2FccnamkRP2s7qNZskVpuyWrFe7-4wMzXlDVsmGao6RzrcX7_mstmRTjPbwiS3SDfnhFY_jZaLubbIQmnlWla4ulBhtKiRGnbFHnVukdhcNkj__EO0tISyyLVt3VW2NpIUm-svZO_PnQwcSEkrEJZqdKBAKuRphP2JjcFmWGAMom2VpM8Y4vLYeray_DCm-LORqdMMxEbmVTvVWyUthlqmJIsLSlgqpKmpSwvC58MuBMQevkF4nPeH7vh2MOBBwLnrO9CA4EHf90Y-Hwe-7wWe6x8d-Om2uv3xiDuASltDL-frd084_gKiHn1N?type=png)](https://mermaid.live/edit#pako:eNpFUc1OwkAQfpXNHIwmhVTaBboHE6QqJphI0Isth6U7tBvbLpluxQq8u6VEnNPM9zfJzB4SoxAEbHKzSzJJlr2FccnamkRP2s7qNZskVpuyWrFe7-4wMzXlDVsmGao6RzrcX7_mstmRTjPbwiS3SDfnhFY_jZaLubbIQmnlWla4ulBhtKiRGnbFHnVukdhcNkj__EO0tISyyLVt3VW2NpIUm-svZO_PnQwcSEkrEJZqdKBAKuRphP2JjcFmWGAMom2VpM8Y4vLYeray_DCm-LORqdMMxEbmVTvVWyUthlqmJIsLSlgqpKmpSwvC58MuBMQevkF4nPeH7vh2MOBBwLnrO9CA4EHf90Y-Hwe-7wWe6x8d-Om2uv3xiDuASltDL-frd084_gKiHn1N)
+```mermaid
+flowchart LR
+    A[GitHub Actions] -->|Hourly Scheduler|B(Playwright Scraper)
+    -->C[SQLite Database]
+    -->D[Query & Filter Layer]
+    -->E[Streamlit Dashboard Live UI]
+```
 **High-level Flow:**
+
 GitHub Actions (hourly) → Playwright Scraper → SQLite Database → Query & Filter Layer → Streamlit Dashboard
+
 ---
 
 ### ⚙️ Features
