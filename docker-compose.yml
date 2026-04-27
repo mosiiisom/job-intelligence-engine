@@ -1,0 +1,27 @@
+services:
+  scraper:
+    build: .
+    container_name: 'job-scraper'
+    command: 'python main.py'
+    volumes:
+      - ./data:/app/data:rw
+      - ./config:/app/config
+    restart: "no"
+    profiles: ["scraper"]
+    working_dir: /app
+
+  dashboard:
+    build: .
+    container_name: "streamlit-dashboard"
+    command: "streamlit run dashboard/app.py --server.port=8501 --server.address=0.0.0.0"
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD","curl","-f","http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
