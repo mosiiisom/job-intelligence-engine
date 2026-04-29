@@ -11,8 +11,6 @@ def engine():
     return PlaywrightEngine(headless=True)
 
 
-# ====================== تست‌های ساده ======================
-
 def test_engine_initialization(engine):
     assert engine.headless is True
     assert engine.proxies == []
@@ -20,8 +18,6 @@ def test_engine_initialization(engine):
     assert engine.playwright is None
     assert engine.browser is None
 
-
-# ====================== تست با Mock ======================
 
 @patch("scraper.playwright_scraper.sync_playwright")
 def test_start_method(mock_sync_playwright, engine):
