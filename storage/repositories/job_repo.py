@@ -17,7 +17,7 @@ def bulk_upsert_jobs(jobs: List[Job]):
             job.posted_at,
             job.work_type,
             job.employment_type,
-            ",".join(job.tags),
+            ",".join(job.tags) if job.tags else None,
         )
         for job in jobs
     ]

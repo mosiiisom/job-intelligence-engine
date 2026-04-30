@@ -24,5 +24,5 @@ class Job:
             "posted_at": self.posted_at,
             "work_type": self.work_type,
             "employment_type": self.employment_type,
-            "tags": ",".join(self.tags)
+            "tags": ",".join(self.tags) if self.tags else None,
         }
