@@ -5,58 +5,10 @@ from unittest.mock import patch
 from models.job import Job
 from storage.database import get_connection, init_db
 from storage.repositories.job_repo import bulk_upsert_jobs
-from tests.test_storage.test_database import connection
-
-
-@pytest.fixture
-def test_db_path(tmp_path):
-    return tmp_path / "test_job.db"
-
-
-@pytest.fixture
-def db_connection(test_db_path):
-    with patch('storage.database.DB_PATH', str(test_db_path)):
-        conn = get_connection()
-        init_db()
-        yield conn
-        conn.close()
+from tests.test_storage.test_repositories.helpers import create_test_job, create_test_jobs
 
 
 # ====================== Test Helpers ======================
-def create_test_job(
-        title: str = "Senior Python Developer",
-        company: str = "Stripe",
-        location: str = "Worldwide",
-        url: str = None,
-        source: str = "remoteok",
-        posted_at: str = "2026-04-28T10:00:00Z",
-        work_type: str = "remote",
-        employment_type: str = "full-time",
-        tags: list = None
-) -> Job:
-    if url is None:
-        import uuid
-        url = f"https://remoteok.com/test-{uuid.uuid4().hex[:8]}"
-
-    return Job(
-        title=title,
-        company=company,
-        location=location,
-        url=url,
-        source=source,
-        posted_at=posted_at,
-        work_type=work_type,
-        employment_type=employment_type,
-        tags=tags
-    )
-
-
-def create_test_jobs(count: int = 3) -> list[Job]:
-    return [create_test_job(title=f"Engineer {i + 1}",
-                            company=f"Company {i % 4 + 1}",
-                            url=f"https://remoteok.com/batch-{i}")
-            for i in range(count)]
-
 
 def get_job_count(db_connection) -> int:
     cursor = db_connection.cursor()
