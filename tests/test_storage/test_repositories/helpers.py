@@ -34,3 +34,8 @@ def create_test_jobs(count: int = 3) -> list[Job]:
                             company=f"Company {i % 4 + 1}",
                             url=f"https://remoteok.com/batch-{i}")
             for i in range(count)]
+
+
+def seed_jobs(conn, jobs: list):
+    from storage.repositories.job_repo import bulk_upsert_jobs
+    bulk_upsert_jobs(jobs)
