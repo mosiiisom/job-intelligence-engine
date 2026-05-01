@@ -1,9 +1,7 @@
 # ==================== Fixtures ====================
 import pytest
-from unittest.mock import patch
 
 from models.job import Job
-from storage.database import get_connection, init_db
 from storage.repositories.job_repo import bulk_upsert_jobs
 from tests.test_storage.test_repositories.helpers import create_test_job, create_test_jobs
 
@@ -17,7 +15,7 @@ def get_job_count(db_connection) -> int:
     return row["count"]
 
 
-def get_all_jobs(db_connection, limit=100) -> int:
+def get_all_jobs(db_connection, limit=100) -> list[Job]:
     rows = db_connection.execute('SELECT * FROM jobs ORDER BY posted_at DESC LIMIT ?', (limit,)).fetchall()
 
     return [dict(row) for row in rows]
